@@ -20,3 +20,65 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Paleta de colores TuneCast */
+.tunecast-primary {
+    background-color: #7A00D4;
+    color: white;
+}
+
+.tunecast-secondary {
+    background-color: #B486F6;
+    color: black;
+}
+
+.tunecast-accent {
+    background-color: #00C6C6;
+    color: black;
+}
+
+.tunecast-dark {
+    background-color: #000000;
+    color: white;
+}
+
+.tunecast-deep {
+    background-color: #3D0026;
+    color: white;
+}
+
+/* Estilos para el Login */
+.login-container {
+    background-color: #B486F6;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+    background-color: #7A00D4;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.login-btn {
+    background-color: #00C6C6;
+    border: none;
+    color: black;
+    transition: all 0.3s;
+}
+
+.login-btn:hover {
+        background-color: #008a8a;
+        color: white;
+}
+
+.login-link {
+    color: #3D0026;
+    font-weight: bold;
+}
+
+.login-link:hover {
+        color: #7A00D4;
+        text-decoration: none;
+}

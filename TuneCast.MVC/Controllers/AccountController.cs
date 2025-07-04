@@ -14,6 +14,44 @@ namespace TuneCast.MVC.Controllers
             // Configura el endpoint de la API para usuarios
             Crud<Usuario>.EndPoint = "https://localhost:7194/api/Usuarios"; // Reemplaza con tu URL real
         }
+        [HttpGet]
+        public IActionResult RecuperarPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RecuperarPassword(string email, string newPassword)
+        {
+            try
+            {
+                // Buscar usuario por email 
+                var usuario = Crud<Usuario>.GetAll().FirstOrDefault(u => u.Email == email);
+
+                if (usuario == null)
+                {
+                    ViewData["ErrorMessage"] = "Correo no encontrado";
+                    return View();
+                }
+
+                usuario.Contraseña = newPassword;
+                bool success = Crud<Usuario>.Update(usuario.Id, usuario);
+
+                if (success)
+                {
+                    TempData["SuccessMessage"] = "Contraseña actualizada correctamente";
+                    return RedirectToAction("Login");
+                }
+
+                ViewData["ErrorMessage"] = "Error al actualizar la contraseña";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = $"Error: {ex.Message}";
+                return View();
+            }
+        }
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
