@@ -21,7 +21,7 @@ namespace TuneCast.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult RecuperarPassword(string email, string newPassword)
+        public IActionResult RecuperarPassword(string email, string palabraClave, string newPassword)
         {
             try
             {
@@ -31,6 +31,11 @@ namespace TuneCast.MVC.Controllers
                 if (usuario == null)
                 {
                     ViewData["ErrorMessage"] = "Correo no encontrado";
+                    return View();
+                }
+                if (usuario.PalabraClaveRecuperacion != palabraClave)
+                {
+                    ViewData["ErrorMessage"] = "Palabra clave de recuperación incorrecta";
                     return View();
                 }
 
@@ -112,7 +117,7 @@ namespace TuneCast.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string nombre, string email, string contraseña)
+        public async Task<IActionResult> Register(string nombre, string email, string contraseña, string palabraClaveRecuperacion)
         {
             try
             {
@@ -128,7 +133,8 @@ namespace TuneCast.MVC.Controllers
                     Nombre = nombre,
                     Email = email,
                     Contraseña = contraseña,
-                    Rol = "Usuario" // Rol por defecto
+                    Rol = "Usuario", // Rol por defecto
+                    PalabraClaveRecuperacion = palabraClaveRecuperacion
                 };
 
                 var usuarioCreado = await Crud<Usuario>.Create(nuevoUsuario);

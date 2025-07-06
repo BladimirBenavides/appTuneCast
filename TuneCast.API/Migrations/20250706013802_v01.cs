@@ -36,7 +36,8 @@ namespace TuneCast.API.Migrations
                     Nombre = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Contraseña = table.Column<string>(type: "text", nullable: false),
-                    Rol = table.Column<string>(type: "text", nullable: false)
+                    Rol = table.Column<string>(type: "text", nullable: false),
+                    PalabraClaveRecuperacion = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
