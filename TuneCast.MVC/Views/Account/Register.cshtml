@@ -12,11 +12,12 @@
                 </div>
                 <div class="card-body">
                     <form asp-action="Register" method="post">
+           
                         <div class="form-group mb-3">
                             <label class="form-label">Nombre de Usuario</label>
                             <input name="nombre" type="text" class="form-control" required placeholder="Ingrese su nombre" />
                         </div>
-
+                        
                         <div class="form-group mb-3">
                             <label class="form-label">Correo Electrónico</label>
                             <input name="email" type="email" class="form-control" required placeholder="Ingrese su correo" />
@@ -24,15 +25,33 @@
 
                         <div class="form-group mb-3">
                             <label class="form-label">Contraseña</label>
-                            <input name="contraseña" type="password" class="form-control" required placeholder="Ingrese su contraseña" />
+                            <input name="contraseña" type="password" class="form-control" required
+                                   placeholder="Ingrese su contraseña"
+                                   pattern="^(?=.*[A-Z])(?=.*[\W]).{8,}$"
+                                   title="Debe comenzar con mayúscula, contener al menos un carácter especial y tener al menos 8 caracteres" />
+                            <small class="form-text text-muted">
+                                <strong>Requisitos:</strong><br>
+                                • Primera letra en mayúscula<br>
+                                • Al menos un carácter especial (!@@#$%^&amp;*)<br>
+                                • Al menos 8 caracteres<br>
+                                • Ejemplo válido: <em>Contraseña1!</em>
+                            </small>
                         </div>
-
+                      
+                        <div class="form-group mb-3">
+                            <label class="form-label">Confirmar Contraseña</label>
+                            <input name="confirmPassword" type="password" class="form-control" required
+                                   placeholder="Repita su contraseña"
+                                   title="Ambas contraseñas deben coincidir" />
+                        </div>
+                      
                         <div class="form-group mb-3">
                             <label class="form-label">Palabra Clave de Recuperación</label>
-                            <input name="palabraClaveRecuperacion" type="text" class="form-control" required placeholder="Ejemplo: abc123" />
-                            <small class="form-text text-muted">Esta palabra clave te ayudará a recuperar tu contraseña si la olvidas. Elígela cuidadosamente y no la compartas.</small>
+                            <input name="palabraClaveRecuperacion" type="text" class="form-control" required
+                                   placeholder="Ejemplo: Bladi03" />
+                            <small class="form-text text-muted">Guarde esta palabra clave en un lugar seguro.</small>
                         </div>
-
+                       
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn login-btn">
                                 <i class="fas fa-user-plus"></i> Registrar

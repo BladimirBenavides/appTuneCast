@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using TuneCastAPIConsumer;
 using TuneCastModelo;
 
@@ -25,17 +26,30 @@ namespace TuneCast.MVC.Controllers
         {
             try
             {
-                // Buscar usuario por email 
                 var usuario = Crud<Usuario>.GetAll().FirstOrDefault(u => u.Email == email);
 
                 if (usuario == null)
                 {
                     ViewData["ErrorMessage"] = "Correo no encontrado";
+                    ViewData["Email"] = email;
+                    ViewData["PalabraClave"] = palabraClave;
                     return View();
                 }
+
                 if (usuario.PalabraClaveRecuperacion != palabraClave)
                 {
                     ViewData["ErrorMessage"] = "Palabra clave de recuperación incorrecta";
+                    ViewData["Email"] = email;
+                    ViewData["PalabraClave"] = palabraClave;
+                    return View();
+                }
+
+                var passwordPattern = new Regex(@"^(?=.*[A-Z])(?=.*[\W]).{8,}$");
+                if (!passwordPattern.IsMatch(newPassword))
+                {
+                    ViewData["ErrorMessage"] = "La nueva contraseña debe comenzar con mayúscula, contener al menos un carácter especial y tener al menos 8 caracteres.";
+                    ViewData["Email"] = email;
+                    ViewData["PalabraClave"] = palabraClave;
                     return View();
                 }
 
@@ -49,11 +63,15 @@ namespace TuneCast.MVC.Controllers
                 }
 
                 ViewData["ErrorMessage"] = "Error al actualizar la contraseña";
+                ViewData["Email"] = email;
+                ViewData["PalabraClave"] = palabraClave;
                 return View();
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = $"Error: {ex.Message}";
+                ViewData["Email"] = email;
+                ViewData["PalabraClave"] = palabraClave;
                 return View();
             }
         }
@@ -125,6 +143,14 @@ namespace TuneCast.MVC.Controllers
                 if (usuarios.Any(u => u.Email == email))
                 {
                     ViewData["ErrorMessage"] = "El correo electrónico ya está registrado.";
+                    return View();
+                }
+
+                // Validar contraseña: al menos una mayúscula, un carácter especial y longitud mínima de 8 caracteres
+                var passwordPattern = new Regex(@"^(?=.*[A-Z])(?=.*[\W]).{8,}$");
+                if (!passwordPattern.IsMatch(contraseña))
+                {
+                    ViewData["ErrorMessage"] = "La contraseña debe comenzar con una mayúscula, contener al menos un carácter especial y tener al menos 8 caracteres.";
                     return View();
                 }
 
