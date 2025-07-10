@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TuneCast.MVC.styles.css" asp-append-version="true" />
+    @if (ViewData["Title"] == "Iniciar Sesión" || ViewData["Title"] == "Registrar Usuario" || ViewData["Title"] == "Recuperar Contraseña")
+    {
+        <link rel="stylesheet" href="~/css/ValidacionDatos.css" asp-append-version="true" />
+    }
 </head>
 <body>
     <header>
@@ -55,15 +59,6 @@
                                     @Html.AntiForgeryToken()
                                     <button type="submit" class="nav-link btn btn-link text-dark" style="padding: 0.5rem 1rem;">Cerrar Sesión</button>
                                 </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Registrarse</a>
                             </li>
                         }
                     </ul>

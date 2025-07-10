@@ -139,6 +139,10 @@ namespace TuneCast.MVC.Controllers
         {
             try
             {
+                ViewData["Nombre"] = nombre;
+                ViewData["Email"] = email;
+                ViewData["PalabraClaveRecuperacion"] = palabraClaveRecuperacion;
+
                 var usuarios = Crud<Usuario>.GetAll();
                 if (usuarios.Any(u => u.Email == email))
                 {
