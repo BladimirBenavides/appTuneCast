@@ -24,7 +24,13 @@ namespace TuneCast.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Plan>>> GetPlan()
         {
-            return await _context.Planes.ToListAsync();
+            var planes = await _context.Planes.ToListAsync();
+            foreach (var plan in planes)
+            {
+                plan.Precio = Math.Round(plan.Precio, 2, MidpointRounding.AwayFromZero);
+            }
+
+            return planes;
         }
 
         // GET: api/Planes/5
@@ -37,6 +43,7 @@ namespace TuneCast.API.Controllers
             {
                 return NotFound();
             }
+            plan.Precio = Math.Round(plan.Precio, 2, MidpointRounding.AwayFromZero);
 
             return plan;
         }
@@ -50,6 +57,7 @@ namespace TuneCast.API.Controllers
             {
                 return BadRequest();
             }
+            plan.Precio = Math.Round(plan.Precio, 2, MidpointRounding.AwayFromZero);
 
             _context.Entry(plan).State = EntityState.Modified;
 
@@ -77,9 +85,10 @@ namespace TuneCast.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Plan>> PostPlan(Plan plan)
         {
+            plan.Precio = Math.Round(plan.Precio, 2, MidpointRounding.AwayFromZero);
             _context.Planes.Add(plan);
             await _context.SaveChangesAsync();
-
+            plan.Precio = Math.Round(plan.Precio, 2, MidpointRounding.AwayFromZero);
             return CreatedAtAction("GetPlan", new { id = plan.Id }, plan);
         }
 

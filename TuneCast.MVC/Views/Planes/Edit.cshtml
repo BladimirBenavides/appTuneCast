@@ -1,48 +1,134 @@
 ﻿@model TuneCastModelo.Plan
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Plan";
+    Layout = "_Layout";
 }
 
-<h1>Edit</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Planes.css">
+</head>
+<body>
+    <div class="container-custom">
+        <!-- Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-edit"></i> Editar Plan</h1>
+            <p>Modifique los detalles del plan de suscripción</p>
+        </div>
 
-<h4>Plan</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+        <!-- Current Plan Info -->
+        <div class="current-plan-info">
+            <h4>
+                <i class="fas fa-info-circle"></i>
+                Información Actual del Plan
+            </h4>
+            <div class="current-info-grid">
+                <div class="current-info-item">
+                    <div class="current-info-label">ID del Plan</div>
+                    <div class="current-info-value">#@Model.Id</div>
+                </div>
+                <div class="current-info-item">
+                    <div class="current-info-label">Precio Base Original</div>
+                    <div class="current-info-value">$@(Math.Round(Model.Precio / 1.15, 2))</div>
+                </div>
+                <div class="current-info-item">
+                    <div class="current-info-label">Precio Final Actual</div>
+                    <div class="current-info-value">$@Model.Precio</div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <!-- IVA -->
+        <div class="iva-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="iva-warning-text">
+                <h4>Importante - Cálculo de IVA</h4>
+                <p>Al modificar el precio, ingrese el precio base sin IVA. El sistema aplicará automáticamente el 15% de IVA para obtener el precio final.</p>
             </div>
-            <div class="form-group">
-                <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+        <form asp-action="Edit" method="post" id="editPlanForm">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-container">
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-edit"></i>
+                        Modificar Información
+                    </div>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="form-label">
+                            <i class="fas fa-tag"></i> Nombre del Plan
+                        </label>
+                        <input asp-for="Nombre" class="form-control" required />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Precio" class="form-label">
+                            <i class="fas fa-dollar-sign"></i> Precio Base (sin IVA)
+                        </label>
+                        <input asp-for="Precio" class="form-control" type="number" step="0.01"
+                               value="@(Math.Round(Model.Precio / 1.15, 2))" required />
+                        <span asp-validation-for="Precio" class="text-danger"></span>
+                        <small class="text-muted">Precio actual base: $@(Math.Round(Model.Precio / 1.15, 2))</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Descripcion" class="form-label">
+                            <i class="fas fa-align-left"></i> Descripción
+                        </label>
+                        <textarea asp-for="Descripcion" class="form-control" rows="4" required></textarea>
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Actualizar Plan
+                        </button>
+                        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i> Ver Detalles
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <div class="section-title">
+                        <i class="fas fa-eye"></i>
+                        Vista Previa Actualizada
+                    </div>
+
+                    <div class="plan-preview">
+                        <div class="edit-badge">
+                            <i class="fas fa-edit"></i> Editando
+                        </div>
+                        <div class="plan-preview-header">
+                            <div class="preview-name">@Model.Nombre</div>
+                            <div class="preview-price-base">Base: $@(Math.Round(Model.Precio / 1.15, 2))</div>
+                            <div class="preview-price-final">
+                                <span class="currency">$</span><span>@Model.Precio</span>
+                            </div>
+                            <div class="iva-badge">IVA 15% incluido</div>
+                        </div>
+                        <div class="plan-preview-body">
+                            <div class="preview-description">
+                                @Model.Descripcion
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</body>
+</html>

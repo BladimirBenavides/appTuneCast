@@ -1,44 +1,69 @@
 ﻿@model TuneCastModelo.Plan
-
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Plan";
+    Layout = "_Layout";
 }
 
-<h1>Delete</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Planes.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Mensajes de estado -->
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            </div>
+        }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Plan</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+        <!-- Encabezado -->
+        <div class="header">
+            <h1><i class="fas fa-trash-alt"></i> Eliminar Plan</h1>
+            <p>Confirmación requerida para eliminar permanentemente</p>
+        </div>
+
+        <!-- Tarjeta del Plan -->
+        <div class="plan-card">
+            <h2>@Model.Nombre</h2>
+            <div class="plan-details">
+                <p><strong>ID:</strong> #@Model.Id</p>
+                <p><strong>Precio:</strong> $@Model.Precio.ToString("N2")</p>
+                <p><strong>Descripción:</strong> @Model.Descripcion</p>
+            </div>
+
+            <!-- Formulario de Confirmación -->
+            <form asp-action="Delete" method="post" class="delete-form">
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="form-group">
+                    <input type="checkbox" id="confirmDelete" name="confirmDelete" required>
+                    <label for="confirmDelete">
+                        <i class="fas fa-exclamation-triangle"></i> Confirmo que entiendo que esta acción no se puede deshacer
+                    </label>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Eliminar Definitivamente
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

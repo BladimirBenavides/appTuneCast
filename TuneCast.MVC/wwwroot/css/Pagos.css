@@ -1,0 +1,735 @@
+﻿/* ================================
+   PAGOS.CSS - Estilos específicos para el módulo de pagos
+   Nota: Usando !important donde sea necesario para sobrescribir Bootstrap
+   ================================ */
+
+/* ================================
+   CONTENEDORES PRINCIPALES - Vista de pagos
+   ================================ */
+.payment-container {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.payment-card {
+    background: var(--white) !important;
+    border-radius: 20px !important;
+    padding: 40px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+    position: relative;
+    overflow: hidden;
+    border: none !important;
+}
+
+    .payment-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--success-green), var(--teal)) !important;
+    }
+
+/* ================================
+   HEADERS ESPECÍFICOS PARA PAGOS
+   ================================ */
+.payment-header {
+    background: linear-gradient(135deg, var(--success-green) 0%, #20a845 100%) !important;
+    color: var(--white) !important;
+    padding: 40px !important;
+    border-radius: 20px !important;
+    text-align: center !important;
+    margin-bottom: 30px !important;
+    box-shadow: 0 15px 35px rgba(40, 167, 69, 0.3) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+    .payment-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .payment-header > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .payment-header h1, .payment-header h2 {
+        font-size: 2.5em !important;
+        margin-bottom: 10px !important;
+        font-weight: 700 !important;
+        color: var(--white) !important;
+    }
+
+    .payment-header p {
+        font-size: 1.2em !important;
+        opacity: 0.9;
+        margin-bottom: 0 !important;
+        color: var(--white) !important;
+    }
+
+/* ================================
+   RESUMEN DE PAGO - Vista Create
+   ================================ */
+.payment-summary {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(0, 198, 198, 0.05));
+    border: 2px solid var(--success-green);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+    .payment-summary h3 {
+        color: var(--success-green);
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+.payment-amount {
+    font-size: 3em;
+    font-weight: 800;
+    color: var(--dark-purple);
+    margin-bottom: 10px;
+}
+
+    .payment-amount .currency {
+        font-size: 0.6em;
+        vertical-align: top;
+    }
+
+.payment-plan-info {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.payment-security-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--success-green);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/* ================================
+   FORMULARIOS DE PAGO
+   ================================ */
+.payment-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.payment-form-section {
+    background: var(--light-gray);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-left: 4px solid var(--primary-purple);
+}
+
+.payment-form-title {
+    color: var(--primary-purple);
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-form-group {
+    margin-bottom: 20px;
+}
+
+.payment-form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark-purple);
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.payment-form-control {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid var(--border-gray);
+    border-radius: 12px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+    .payment-form-control:focus {
+        outline: none;
+        border-color: var(--success-green);
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .payment-form-control.is-invalid {
+        border-color: var(--danger-red);
+    }
+
+/* Input groups específicos para pagos */
+.payment-input-group {
+    display: flex;
+    align-items: stretch;
+}
+
+.payment-input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--light-gray);
+    border: 2px solid var(--border-gray);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    font-weight: 600;
+    color: var(--dark-purple);
+}
+
+.payment-input-group .payment-form-control {
+    border-radius: 0 12px 12px 0;
+    border-left: none;
+}
+
+    .payment-input-group .payment-form-control:focus {
+        border-left: 2px solid var(--success-green);
+    }
+
+/* Campos de tarjeta específicos */
+.card-number-input {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 15px;
+}
+
+/* ================================
+   MÉTODOS DE PAGO - Vista Create
+   ================================ */
+.payment-methods {
+    margin-bottom: 30px;
+}
+
+.payment-method-option {
+    background: var(--white);
+    border: 2px solid var(--border-gray);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+    .payment-method-option:hover {
+        border-color: var(--success-green);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+    }
+
+    .payment-method-option.selected {
+        border-color: var(--success-green);
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(0, 198, 198, 0.05));
+    }
+
+.payment-method-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--success-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.2em;
+}
+
+.payment-method-info h4 {
+    margin-bottom: 5px;
+    color: var(--dark-purple);
+    font-size: 1.1em;
+}
+
+.payment-method-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* ================================
+   BOTONES ESPECÍFICOS PARA PAGOS
+   ================================ */
+.btn-payment-primary {
+    background: linear-gradient(135deg, var(--success-green), #20a845);
+    color: var(--white);
+    padding: 18px 35px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    .btn-payment-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 25px rgba(40, 167, 69, 0.3);
+        color: var(--white);
+        text-decoration: none;
+    }
+
+.btn-payment-secondary {
+    background: transparent;
+    border: 2px solid var(--success-green);
+    color: var(--success-green);
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    font-size: 1em;
+}
+
+    .btn-payment-secondary:hover {
+        background: var(--success-green);
+        color: var(--white);
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+/* ================================
+   ALERTAS DE PAGO
+   ================================ */
+.payment-alert {
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.payment-alert-success {
+    background: rgba(40, 167, 69, 0.1);
+    border: 2px solid var(--success-green);
+    color: #155724;
+}
+
+.payment-alert-warning {
+    background: rgba(255, 193, 7, 0.1);
+    border: 2px solid var(--warning-orange);
+    color: #856404;
+}
+
+.payment-alert-danger {
+    background: rgba(220, 53, 69, 0.1);
+    border: 2px solid var(--danger-red);
+    color: #721c24;
+}
+
+.payment-alert-icon {
+    font-size: 1.5em;
+}
+
+.payment-alert-content h4 {
+    margin-bottom: 5px;
+    font-size: 1.2em;
+}
+
+.payment-alert-content p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ================================
+   DETALLES Y TABLAS - Vistas Details/Index
+   ================================ */
+.payment-details-grid {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.payment-details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+    .payment-details-row:last-child {
+        border-bottom: none;
+    }
+
+.payment-details-label {
+    font-weight: 600;
+    color: var(--dark-purple);
+    font-size: 1.1em;
+}
+
+.payment-details-value {
+    color: #666;
+    font-size: 1.1em;
+}
+
+    .payment-details-value.amount {
+        font-weight: 700;
+        color: var(--success-green);
+        font-size: 1.3em;
+    }
+
+/* Tabla específica para lista de pagos */
+.payment-table-container {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.payment-table-header {
+    background: linear-gradient(135deg, var(--success-green), #20a845);
+    color: var(--white);
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .payment-table-header h3 {
+        margin: 0;
+        font-size: 1.5em;
+    }
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .payment-table th {
+        background: var(--light-gray);
+        padding: 20px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--dark-purple);
+        border-bottom: 2px solid var(--border-gray);
+    }
+
+    .payment-table td {
+        padding: 20px;
+        border-bottom: 1px solid var(--border-gray);
+        vertical-align: middle;
+    }
+
+    .payment-table tr:hover {
+        background: rgba(40, 167, 69, 0.03);
+    }
+
+    .payment-table .amount-cell {
+        font-weight: 700;
+        color: var(--success-green);
+        font-size: 1.1em;
+    }
+
+    /* Iconos en tabla de métodos de pago */
+    .payment-table .fas.fa-credit-card {
+        color: var(--primary-purple);
+    }
+
+    .payment-table .fab.fa-paypal {
+        color: var(--info-blue);
+    }
+
+    .payment-table .fas.fa-university {
+        color: var(--success-green);
+    }
+
+/* ================================
+   ESTADO DE PAGO EXITOSO - Vista Success
+   ================================ */
+.payment-success-container {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.payment-success-icon {
+    background: linear-gradient(135deg, var(--success-green), #20a845);
+    color: var(--white);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    font-size: 3em;
+    animation: successPulse 2s ease-in-out infinite;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(40, 167, 69, 0);
+    }
+}
+
+.payment-success-title {
+    color: var(--success-green);
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.payment-success-details {
+    background: var(--light-gray);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    border-left: 4px solid var(--success-green);
+}
+
+    .payment-success-details h4 {
+        color: var(--dark-purple);
+        margin-bottom: 15px;
+    }
+
+.payment-success-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .payment-success-info:last-child {
+        margin-bottom: 0;
+    }
+
+.payment-success-label {
+    font-weight: 600;
+    color: var(--dark-purple);
+}
+
+.payment-success-value {
+    color: #666;
+}
+
+/* ================================
+   ACCIONES DE PAGO
+   ================================ */
+.payment-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.payment-btn-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.payment-btn-sm {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    border-radius: 20px;
+}
+
+/* ================================
+   SEGURIDAD Y CONFIANZA
+   ================================ */
+.payment-security-info {
+    background: linear-gradient(135deg, rgba(23, 162, 184, 0.05), rgba(40, 167, 69, 0.05));
+    border: 2px solid var(--info-blue);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 25px 0;
+    text-align: center;
+}
+
+.payment-security-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.payment-security-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: var(--info-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.5em;
+}
+
+.payment-security-text {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+/* ================================
+   ESTILOS ADICIONALES PARA ELEMENTOS ESPECÍFICOS
+   ================================ */
+
+/* Lista de errores en alertas */
+.payment-error-list {
+    margin: 10px 0 0 20px;
+    padding: 0;
+}
+
+    .payment-error-list li {
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+/* Display de métodos de pago en Details */
+.payment-method-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.payment-method-icon-display {
+    color: var(--primary-purple);
+}
+
+.payment-method-icon-paypal {
+    color: var(--info-blue);
+}
+
+.payment-method-icon-bank {
+    color: var(--success-green);
+}
+
+/* Estilos para impresión */
+@media print {
+    .payment-actions, .payment-header {
+        display: none !important;
+    }
+
+    .payment-container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .payment-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .payment-alert {
+        border: 1px solid #ccc !important;
+        background: transparent !important;
+    }
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 15px;
+    }
+
+    .payment-card {
+        padding: 25px;
+    }
+
+    .payment-header h1, .payment-header h2 {
+        font-size: 2em;
+    }
+
+    .payment-amount {
+        font-size: 2.5em;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-actions, .payment-btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-payment-primary, .btn-payment-secondary {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .payment-details-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .payment-security-icons {
+        flex-wrap: wrap;
+    }
+
+    .payment-table-responsive {
+        overflow-x: auto;
+    }
+
+    .payment-success-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5em;
+    }
+
+    .payment-success-title {
+        font-size: 2em;
+    }
+}

@@ -1,0 +1,1145 @@
+﻿/* ================================
+   VARIABLES GLOBALES
+   ================================ */
+:root {
+    --primary-purple: #7A00D4;
+    --light-purple: #B486F6;
+    --dark-purple: #3D0026;
+    --teal: #00C6C6;
+    --success-green: #28A745;
+    --warning-orange: #FFC107;
+    --danger-red: #DC3545;
+    --danger-dark: #C82333;
+    --info-blue: #17A2B8;
+    --white: #FFFFFF;
+    --light-gray: #F8F9FA;
+    --border-gray: #E0E0E0;
+}
+
+/* ================================
+   BASE Y RESET
+   ================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--light-purple) 0%, var(--teal) 100%);
+    min-height: 100vh;
+    padding: 20px 0;
+    line-height: 1.6;
+}
+
+.container, .container-custom, .confirmation-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.confirmation-container {
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+/* ================================
+   HEADERS - Todas las vistas
+   ================================ */
+.page-header, .header {
+    color: var(--white);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
+    box-shadow: 0 15px 35px rgba(122, 0, 212, 0.3);
+}
+
+/* Headers específicos por vista */
+.header { /* Vista eliminar */
+    background: linear-gradient(135deg, var(--danger-red), var(--danger-dark));
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    padding: 2rem;
+}
+
+.page-header.warning { /* Vista editar */
+    background: linear-gradient(135deg, var(--warning-orange) 0%, #e67e22 100%);
+    box-shadow: 0 15px 35px rgba(255, 193, 7, 0.3);
+}
+
+.page-header.info { /* Vista detalles */
+    background: linear-gradient(135deg, var(--info-blue) 0%, #138496 100%);
+    box-shadow: 0 15px 35px rgba(23, 162, 184, 0.3);
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.page-header > *, .header > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-header h1, .header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.page-header p, .header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.plan-id-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+/* ================================
+   ALERTAS - Todas las vistas
+   ================================ */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.alert-danger {
+    background-color: #F8D7DA;
+    color: #721C24;
+    border: 1px solid #F5C6CB;
+}
+
+.alert-success {
+    background-color: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+}
+
+/* ================================
+   CARDS Y CONTENEDORES PRINCIPALES
+   ================================ */
+.confirmation-card, .plan-card, .form-section, .preview-section, .info-panel, .stat-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Card específica para vista eliminar */
+.plan-card {
+    border-top: 4px solid var(--danger-red);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+}
+
+.confirmation-card {
+    text-align: center;
+}
+
+.info-panel {
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   LAYOUTS Y GRIDS - Vistas crear/editar/detalles
+   ================================ */
+.details-grid, .form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.stats-section, .plans-grid {
+    display: grid;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stats-section { /* Vista dashboard */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.plans-grid { /* Vista dashboard */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.suggestion-cards { /* Vista crear */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* ================================
+   PLAN SHOWCASES - Vistas detalles/crear/editar
+   ================================ */
+.plan-showcase, .plan-preview {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.plan-showcase {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.plan-preview {
+    border: 2px solid var(--light-purple);
+}
+
+    .plan-preview:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(122, 0, 212, 0.2);
+    }
+
+    .plan-showcase::before, .plan-preview::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-purple), var(--teal));
+    }
+
+    .plan-preview::before {
+        height: 5px;
+    }
+
+.plan-header, .plan-preview-header, .confirmation-header {
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.plan-header, .plan-preview-header {
+    background: linear-gradient(135deg, rgba(122, 0, 212, 0.05), rgba(0, 198, 198, 0.05));
+    padding: 40px;
+}
+
+.confirmation-header { /* Vista confirmación */
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
+    color: var(--white);
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+/* ================================
+   NOMBRES Y PRECIOS - Todas las vistas de planes
+   ================================ */
+.plan-name, .preview-name {
+    font-size: 2.5em;
+    font-weight: 800;
+    color: var(--primary-purple);
+    margin-bottom: 15px;
+}
+
+.preview-name {
+    font-size: 1.5em;
+}
+
+.price-amount, .price-final, .plan-price-final, .preview-price-final {
+    font-size: 3.5em;
+    font-weight: 800;
+    color: var(--dark-purple);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.plan-price-final, .preview-price-final {
+    font-size: 2.5em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.preview-price-final {
+    font-size: 2em;
+}
+
+.price-currency, .currency {
+    font-size: 0.6em;
+    vertical-align: top;
+    margin-top: 0.3em;
+    margin-right: 0.1em;
+}
+
+.price-base, .plan-price-base, .preview-price-base {
+    font-size: 1.2em;
+    color: #666;
+    text-decoration: line-through;
+    opacity: 0.7;
+    margin-bottom: 5px;
+}
+
+.price-breakdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.price-arrow {
+    font-size: 1.5em;
+    color: var(--teal);
+}
+
+/* ================================
+   BADGES Y INDICADORES - Todas las vistas
+   ================================ */
+.iva-info, .iva-badge, .status-indicator, .user-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--teal);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.iva-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+}
+
+.status-indicator {
+    background: var(--success-green);
+    margin-bottom: 20px;
+}
+
+.edit-badge { /* Vista editar */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--warning-orange);
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+/* ================================
+   DESCRIPCIONES Y CARACTERÍSTICAS - Todas las vistas de planes
+   ================================ */
+.plan-description, .description-text, .preview-description {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+
+.description-text {
+    background: var(--light-gray);
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-purple);
+    color: #555;
+}
+
+.preview-description {
+    font-style: italic;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+.plan-features, .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.plan-features {
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .plan-features li, .feature-item {
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+        color: #555;
+        font-size: 1.1em;
+    }
+
+.feature-item {
+    padding: 15px;
+    background: rgba(122, 0, 212, 0.03);
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.plan-features li::before, .feature-icon {
+    content: '✓';
+    background: var(--teal);
+    color: var(--white);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--success-green), #20a845);
+    font-size: 1.1em;
+}
+
+/* ================================
+   SECCIONES DE INFORMACIÓN - Vistas crear/editar/confirmación
+   ================================ */
+.warning-section, .iva-warning, .iva-notice, .current-plan-info, .iva-info {
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.warning-section { /* Vista confirmación */
+    background: rgba(255, 193, 7, 0.1);
+    border: 2px solid #FFC107;
+}
+
+.iva-warning { /* Vista editar */
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(255, 193, 7, 0.1));
+    border: 2px solid var(--warning-orange);
+}
+
+.iva-notice { /* Vista dashboard */
+    background: linear-gradient(135deg, rgba(0, 198, 198, 0.1), rgba(122, 0, 212, 0.1));
+    border: 2px solid var(--light-purple);
+    flex: 1;
+    min-width: 300px;
+}
+
+.current-plan-info { /* Vista editar */
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(230, 126, 34, 0.1));
+    border: 2px solid var(--warning-orange);
+}
+
+.iva-info { /* Vista crear */
+    background: linear-gradient(135deg, rgba(0, 198, 198, 0.1), rgba(122, 0, 212, 0.1));
+    border: 2px solid var(--light-purple);
+}
+
+.warning-section h3, .iva-warning-text h4, .iva-notice-text h4, .current-plan-info h4 {
+    color: #856404;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.iva-warning-text h4, .current-plan-info h4 {
+    color: var(--warning-orange);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.iva-notice-text h4 {
+    color: var(--primary-purple);
+}
+
+.warning-section p, .iva-warning-text p, .iva-notice-text p {
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.iva-warning i, .iva-notice i {
+    font-size: 1.5em;
+    color: var(--warning-orange);
+}
+
+.iva-notice i {
+    color: var(--primary-purple);
+}
+
+/* ================================
+   CÁLCULOS Y TÉRMINOS - Vistas detalles/confirmación
+   ================================ */
+.terms-section, .calculations-section {
+    border-radius: 15px;
+    padding: 20px;
+    margin: 25px 0;
+    text-align: left;
+}
+
+.terms-section { /* Vista confirmación */
+    background: rgba(122, 0, 212, 0.05);
+}
+
+.calculations-section { /* Vista detalles */
+    background: linear-gradient(135deg, rgba(0, 198, 198, 0.1), rgba(122, 0, 212, 0.1));
+    border: 2px solid var(--light-purple);
+}
+
+.terms-section h4, .calculations-title {
+    color: var(--primary-purple);
+    margin-bottom: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terms-section ul {
+    padding-left: 20px;
+    color: #666;
+}
+
+.terms-section li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+    .calc-row:last-child {
+        border-bottom: none;
+        font-weight: 700;
+        margin-top: 10px;
+        padding-top: 15px;
+        border-top: 2px solid var(--primary-purple);
+    }
+
+/* ================================
+   FORMULARIOS - Vistas crear/editar/eliminar
+   ================================ */
+.current-info-grid, .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.info-grid {
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.current-info-item, .info-item {
+    text-align: center;
+}
+
+.info-item {
+    background: var(--light-gray);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.current-info-label, .info-item-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.info-item-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.current-info-value, .info-item-value {
+    font-weight: 700;
+    color: var(--dark-purple);
+    font-size: 1.1em;
+}
+
+.info-item-value {
+    font-size: 1.4em;
+    font-weight: 800;
+    color: var(--primary-purple);
+}
+
+.form-group {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+    .form-group.vertical {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark-purple);
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid var(--border-gray);
+    border-radius: 12px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-purple);
+        box-shadow: 0 0 0 3px rgba(122, 0, 212, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .form-control.is-invalid {
+        border-color: var(--danger-red);
+    }
+
+.form-group input[type="checkbox"] { /* Vista eliminar */
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--danger-red);
+}
+
+.text-danger {
+    color: var(--danger-red);
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.text-muted {
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.delete-form { /* Vista eliminar */
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #DEE2E6;
+}
+
+/* ================================
+   SUGGESTION CARDS - Vista crear
+   ================================ */
+.suggestion-card {
+    background: linear-gradient(135deg, rgba(122, 0, 212, 0.05), rgba(0, 198, 198, 0.05));
+    border: 2px solid var(--light-purple);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .suggestion-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--primary-purple);
+        box-shadow: 0 5px 15px rgba(122, 0, 212, 0.2);
+    }
+
+    .suggestion-card.active {
+        background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+        color: var(--white);
+        border-color: var(--primary-purple);
+    }
+
+    .suggestion-card h4 {
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .suggestion-card p {
+        font-size: 0.9em;
+        margin: 0;
+        opacity: 0.8;
+    }
+
+    .suggestion-card .price {
+        font-weight: 700;
+        font-size: 1.2em;
+        margin-top: 10px;
+    }
+
+/* ================================
+   STATS Y DASHBOARD - Vista dashboard
+   ================================ */
+.stat-card {
+    text-align: center;
+    border-left: 5px solid var(--teal);
+    transition: all 0.3s ease;
+}
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-card:nth-child(2) {
+        border-left-color: var(--primary-purple);
+    }
+
+    .stat-card:nth-child(3) {
+        border-left-color: var(--warning-orange);
+    }
+
+    .stat-card:nth-child(4) {
+        border-left-color: var(--success-green);
+    }
+
+.stat-icon {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: var(--primary-purple);
+}
+
+.stat-number {
+    font-size: 2.8em;
+    font-weight: 800;
+    color: var(--dark-purple);
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.actions-bar { /* Vista dashboard */
+    background: var(--white);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* ================================
+   BOTONES - Todas las vistas
+   ================================ */
+.action-buttons, .btn-group, .button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.btn-group, .button-group {
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.button-group {
+    gap: 1rem;
+    margin-top: 0;
+}
+
+.btn {
+    padding: 18px 35px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    min-width: 180px;
+    justify-content: center;
+}
+
+.button-group .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1em;
+    min-width: auto;
+}
+
+/* Botones primarios */
+.btn-confirm, .btn-primary {
+    background: linear-gradient(135deg, var(--teal), var(--primary-purple));
+    color: var(--white);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+}
+
+    .btn-confirm:hover, .btn-primary:hover {
+        transform: translateY(-3px);
+        color: var(--white);
+        text-decoration: none;
+    }
+
+.btn-confirm:hover {
+    box-shadow: 0 15px 25px rgba(0, 198, 198, 0.3);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 10px 25px rgba(122, 0, 212, 0.4);
+}
+
+/* Botones secundarios */
+.btn-cancel, .btn-secondary {
+    background: transparent;
+    border: 3px solid var(--primary-purple);
+    color: var(--primary-purple);
+}
+
+.btn-secondary {
+    background: var(--border-gray);
+    color: var(--dark-purple);
+    border: none;
+}
+
+.button-group .btn-secondary {
+    background: #6C757D;
+    color: var(--white);
+}
+
+.btn-cancel:hover, .btn-secondary:hover {
+    text-decoration: none;
+    transform: translateY(-3px);
+}
+
+.btn-cancel:hover {
+    background: var(--primary-purple);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background: #ccc;
+    color: var(--dark-purple);
+}
+
+.button-group .btn-secondary:hover {
+    background: #5A6268;
+    color: var(--white);
+}
+
+/* Botones de estado */
+.btn-success {
+    background: var(--success-green);
+    color: var(--white);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning-orange), #e67e22);
+    color: var(--white);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger-red), var(--danger-dark));
+    color: var(--white);
+}
+
+.btn-info {
+    background: var(--teal);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: var(--danger-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Tamaños especiales */
+.btn-sm {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    min-width: auto;
+}
+
+.btn-selection {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 25px;
+    font-size: 1.1em;
+}
+
+.btn-disabled {
+    background: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    border: 1px solid #dee2e6;
+}
+
+.select-plan-btn {
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .select-plan-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(122, 0, 212, 0.3);
+    }
+
+/* ================================
+   ELEMENTOS DIVERSOS
+   ================================ */
+.confirmation-icon { /* Vista confirmación */
+    background: linear-gradient(135deg, var(--teal), var(--primary-purple));
+    color: var(--white);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2em;
+}
+
+.star-icon {
+    color: var(--warning-orange);
+    font-size: 1.5em;
+}
+
+.fas {
+    font-size: 1em;
+}
+
+.plan-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.plan-selection {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.action-link {
+    color: var(--primary-purple);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+    .action-link:hover {
+        background-color: rgba(122, 0, 212, 0.1);
+        text-decoration: underline;
+    }
+
+/* ================================
+   TABLAS - Vista dashboard
+   ================================ */
+.table-section {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    color: var(--white);
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .table-header h3 {
+        margin: 0;
+        font-size: 1.5em;
+    }
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.plans-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .plans-table th {
+        background: var(--light-gray);
+        padding: 20px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--dark-purple);
+        border-bottom: 2px solid var(--border-gray);
+    }
+
+    .plans-table td {
+        padding: 20px;
+        border-bottom: 1px solid var(--border-gray);
+        vertical-align: middle;
+    }
+
+    .plans-table tr:hover {
+        background: rgba(122, 0, 212, 0.03);
+    }
+
+.price-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.base-price {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.final-price {
+    font-weight: 700;
+    color: var(--primary-purple);
+    font-size: 1.1em;
+}
+
+/* ================================
+   TÍTULOS GENERALES
+   ================================ */
+.section-title, .info-title, .description-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--primary-purple);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.description-title {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.plan-card h2 {
+    color: var(--danger-red);
+    margin-bottom: 1.5rem;
+}
+
+.plan-details p {
+    margin-bottom: 0.75rem;
+}
+
+.plan-users {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.plan-body {
+    padding: 30px;
+}
+
+.preview-note {
+    margin-top: 10px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+@media (max-width: 768px) {
+    .details-grid, .form-container, .suggestion-cards, .current-info-grid, .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .btn-group, .action-buttons, .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .actions-bar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .iva-notice {
+        min-width: auto;
+    }
+
+    .page-header h1, .header h1 {
+        font-size: 2em;
+    }
+
+    .plan-name, .preview-name {
+        font-size: 2em;
+    }
+
+    .price-amount, .price-final, .plan-price-final {
+        font-size: 2.5em;
+    }
+}

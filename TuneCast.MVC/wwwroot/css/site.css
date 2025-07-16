@@ -1,24 +1,22 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+.form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 /* Paleta de colores TuneCast */
@@ -68,17 +66,17 @@ body {
     transition: all 0.3s;
 }
 
-.login-btn:hover {
+    .login-btn:hover {
         background-color: #008a8a;
         color: white;
-}
+    }
 
 .login-link {
     color: #3D0026;
     font-weight: bold;
 }
 
-.login-link:hover {
+    .login-link:hover {
         color: #7A00D4;
         text-decoration: none;
-}
+    }
