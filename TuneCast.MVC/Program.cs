@@ -14,7 +14,7 @@ namespace TuneCast.MVC
             Crud<Pago>.EndPoint = "https://localhost:7194/api/Pagos";
             Crud<Plan>.EndPoint = "https://localhost:7194/api/Planes";
             Crud<Playlist>.EndPoint = "https://localhost:7194/api/Playlists";
-            Crud<Suscripcion>.EndPoint = "https://localhost:7194/api/Subscripciones";
+            Crud<Suscripcion>.EndPoint = "https://localhost:7194/api/Suscripciones";
             Crud<Usuario>.EndPoint = "https://localhost:7194/api/Usuarios";
 
 

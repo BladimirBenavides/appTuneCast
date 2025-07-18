@@ -40,11 +40,34 @@ namespace TuneCast.MVC.Controllers
             return View(nuevoPago);
         }
 
-        // POST: PagosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Pago pago, string numeroTarjeta, string fechaExpiracion, string cvv, string metodoPago)
         {
+            //OBTENER AUTOMÁTICAMENTE EL USUARIO LOGUEADO
+            if (User.Identity.IsAuthenticated)
+            {
+                var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    pago.UsuarioId = userId; //Asignar automáticamente el ID del usuario logueado
+                }
+                else
+                {
+                    ModelState.AddModelError("", "No se pudo identificar el usuario actual.");
+                    ViewData["NumeroTarjeta"] = numeroTarjeta;
+                    ViewData["FechaExpiracion"] = fechaExpiracion;
+                    ViewData["CVV"] = cvv;
+                    ViewData["MetodoPago"] = metodoPago;
+                    return View(pago);
+                }
+            }
+            else
+            {
+                // Si no está autenticado, redirigir al login
+                return RedirectToAction("Login", "Account");
+            }
+
             // Preservar datos del formulario para repoblación
             ViewData["NumeroTarjeta"] = numeroTarjeta;
             ViewData["FechaExpiracion"] = fechaExpiracion;
@@ -54,7 +77,7 @@ namespace TuneCast.MVC.Controllers
             // Validación básica del modelo
             if (!ModelState.IsValid)
             {
-                return View(pago); // Si el modelo no es válido, vuelve a la vista con los errores
+                return View(pago);
             }
 
             // Validación de datos de tarjeta
@@ -90,7 +113,7 @@ namespace TuneCast.MVC.Controllers
 
                 // Completar información del pago
                 pago.FechaPago = DateTime.UtcNow;
-                pago.MetodoPago = metodoPago;  // Asignar el método de pago
+                pago.MetodoPago = metodoPago;
 
                 // Guardar en base de datos
                 var pagoGuardado = await Crud<Pago>.Create(pago);

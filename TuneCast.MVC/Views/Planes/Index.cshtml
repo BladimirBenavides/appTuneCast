@@ -20,7 +20,7 @@
     <div class="container-custom">
         <!-- Cabeza -->
         <div class="page-header">
-            <h1><img src="Images\Icono.png" alt="Logo" style="width: 60px; height: 60px;"> TuneCast</h1>
+            <h1>TuneCast</h1>
             <p>Sistema de Gestión de Planes de Suscripción</p>
         </div>
 
@@ -33,20 +33,7 @@
                 <div class="stat-number">@(Model?.Count() ?? 0)</div>
                 <div class="stat-label">Planes Activos</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-number">@(Model?.Sum(p => p.Nombre == "Personal" ? 1 : p.Nombre == "Familiar" ? 4 : 50) ?? 0)</div>
-                <div class="stat-label">Usuarios Máximos</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-                <div class="stat-number">$@(Model?.Sum(p => p.Precio) ?? 0)</div>
-                <div class="stat-label">Ingresos Potenciales</div>
-            </div>
+           
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-percentage"></i>

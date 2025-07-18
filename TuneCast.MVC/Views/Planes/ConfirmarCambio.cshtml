@@ -20,7 +20,7 @@
                 <div class="confirmation-icon">
                     <i class="fas fa-exchange-alt"></i>
                 </div>
-                <h1>Confirmar Cambio de Plan</h1>
+                <h1>Confirmar Compra De Plan</h1>
                 <p>Estás a punto de cambiar a un nuevo plan de suscripción</p>
             </div>
 
@@ -97,10 +97,10 @@
             </div>
 
             <div class="action-buttons">
-                <form asp-action="CambiarPlan" method="post" style="display: inline;">
+                <form asp-action="Index" asp-controller="Pagos" method="get" style="display: inline;">
                     <input type="hidden" name="planId" value="@Model.Id" />
-                    <button type="submit" class="btn btn-confirm" onclick="return confirm('¿Estás seguro de que quieres cambiar a este plan?')">
-                        <i class="fas fa-check"></i> Proceder Metodo De Pago
+                    <button type="submit" class="btn btn-confirm" onclick="return confirm('¿Estás seguro de que quieres comprar este plan?')">
+                        <i class="fas fa-check"></i> Proceder Con El Pago
                     </button>
                 </form>
 
