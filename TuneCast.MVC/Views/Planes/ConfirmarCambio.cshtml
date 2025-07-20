@@ -97,7 +97,8 @@
             </div>
 
             <div class="action-buttons">
-                <form asp-action="Index" asp-controller="Pagos" method="get" style="display: inline;">
+                
+                <form asp-action="Create" asp-controller="Pagos" method="get" style="display: inline;">
                     <input type="hidden" name="planId" value="@Model.Id" />
                     <button type="submit" class="btn btn-confirm" onclick="return confirm('¿Estás seguro de que quieres comprar este plan?')">
                         <i class="fas fa-check"></i> Proceder Con El Pago

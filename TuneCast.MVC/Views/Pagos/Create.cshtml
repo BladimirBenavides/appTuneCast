@@ -14,10 +14,10 @@
     <div class="payment-summary">
         <h3><i class="fas fa-receipt"></i> Resumen del Pago</h3>
         <div class="payment-amount">
-            <span class="currency">$</span>@(Model?.Monto.ToString("F2") ?? "0.00")
+            <span class="currency">$</span>@(ViewData["PlanPrecio"]?.ToString() ?? Model?.Monto.ToString("F2") ?? "0.00")
         </div>
         <div class="payment-plan-info">
-            Plan seleccionado: <strong>@ViewData["PlanNombre"]</strong>
+            Plan seleccionado: <strong>@(ViewData["PlanNombre"] ?? "Plan Básico")</strong>
         </div>
         <div class="payment-security-badge">
             <i class="fas fa-shield-alt"></i>

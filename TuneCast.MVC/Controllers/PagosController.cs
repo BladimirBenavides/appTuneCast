@@ -3,6 +3,7 @@ using TuneCastAPIConsumer;
 using TuneCastModelo;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace TuneCast.MVC.Controllers
 {
@@ -22,22 +23,87 @@ namespace TuneCast.MVC.Controllers
             return View(data);
         }
 
-        // GET: PagosController/Create
-        public ActionResult Create()
+        // GET: PagosController/Create 
+        public ActionResult Create(int? planId)
         {
-            // Inicializar con valores por defecto
-            var nuevoPago = new Pago
+            try
             {
-                FechaPago = DateTime.Now
-            };
+                var planes = Crud<Plan>.GetAll();
+                Plan planSeleccionado = null;
 
-            // Inicializar ViewData para campos de tarjeta
-            ViewData["NumeroTarjeta"] = "";
-            ViewData["FechaExpiracion"] = "";
-            ViewData["CVV"] = "";
-            ViewData["MetodoPago"] = "";
+                //SI VIENE UN PLANID, BUSCAR ESE PLAN ESPECÍFICO
+                if (planId.HasValue && planId > 0)
+                {
+                    planSeleccionado = planes?.FirstOrDefault(p => p.Id == planId.Value);
+                }
 
-            return View(nuevoPago);
+                //SI NO SE ENCUENTRA EL PLAN, USAR EL PRIMERO
+                if (planSeleccionado == null)
+                {
+                    planSeleccionado = planes?.FirstOrDefault();
+                }
+
+                if (planSeleccionado != null)
+                {
+                    // Inicializar con el monto del plan SELECCIONADO
+                    var nuevoPago = new Pago
+                    {
+                        FechaPago = DateTime.Now,
+                        Monto = planSeleccionado.Precio //Precio del plan correcto
+                    };
+
+                    // Enviar información del plan SELECCIONADO a la vista
+                    ViewData["PlanNombre"] = planSeleccionado.Nombre;
+                    ViewData["PlanPrecio"] = planSeleccionado.Precio;
+                    ViewData["PlanId"] = planSeleccionado.Id;
+
+                    // Inicializar ViewData para campos de tarjeta
+                    ViewData["NumeroTarjeta"] = "";
+                    ViewData["FechaExpiracion"] = "";
+                    ViewData["CVV"] = "";
+                    ViewData["MetodoPago"] = "Tarjeta de Crédito";
+
+                    return View(nuevoPago);
+                }
+                else
+                {
+                    // inicializar con 0 si no hay planes
+                    var nuevoPago = new Pago
+                    {
+                        FechaPago = DateTime.Now,
+                        Monto = 0
+                    };
+
+                    ViewData["PlanNombre"] = "No hay planes disponibles";
+                    ViewData["PlanPrecio"] = 0;
+                    ViewData["PlanId"] = 0;
+                    ViewData["NumeroTarjeta"] = "";
+                    ViewData["FechaExpiracion"] = "";
+                    ViewData["CVV"] = "";
+                    ViewData["MetodoPago"] = "Tarjeta de Crédito";
+
+                    return View(nuevoPago);
+                }
+            }
+            catch (Exception ex)
+            {
+                // En caso de error, inicializar con valores por defecto
+                var nuevoPago = new Pago
+                {
+                    FechaPago = DateTime.Now,
+                    Monto = 0
+                };
+
+                ViewData["NumeroTarjeta"] = "";
+                ViewData["FechaExpiracion"] = "";
+                ViewData["CVV"] = "";
+                ViewData["MetodoPago"] = "Tarjeta de Crédito";
+                ViewData["PlanNombre"] = "Error al cargar plan";
+                ViewData["PlanPrecio"] = 0;
+                ViewData["PlanId"] = 0;
+
+                return View(nuevoPago);
+            }
         }
 
         [HttpPost]
@@ -115,7 +181,7 @@ namespace TuneCast.MVC.Controllers
                 pago.FechaPago = DateTime.UtcNow;
                 pago.MetodoPago = metodoPago;
 
-                // Guardar en base de datos
+                // Guarda en la base de datos
                 var pagoGuardado = await Crud<Pago>.Create(pago);
 
                 if (pagoGuardado == null || pagoGuardado.Id == 0)
@@ -137,7 +203,6 @@ namespace TuneCast.MVC.Controllers
                 return View(pago);
             }
         }
-
 
         // GET: Confirmación de pago exitoso
         public ActionResult PagoExitoso(decimal monto, string ultimosDigitos)
