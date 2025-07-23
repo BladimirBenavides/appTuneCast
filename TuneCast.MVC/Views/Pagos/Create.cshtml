@@ -4,13 +4,12 @@
 }
 
 <div class="payment-container">
-    <!-- Header principal -->
+
     <div class="payment-header">
         <h1><i class="fas fa-credit-card"></i> @ViewData["Title"]</h1>
         <p>Completa los datos para finalizar tu suscripción</p>
     </div>
 
-    <!-- Resumen del pago -->
     <div class="payment-summary">
         <h3><i class="fas fa-receipt"></i> Resumen del Pago</h3>
         <div class="payment-amount">
@@ -25,15 +24,13 @@
         </div>
     </div>
 
-    <!-- Formulario de pago -->
+
     <div class="payment-card">
         <form asp-action="Create" method="post" class="payment-form">
             @Html.AntiForgeryToken()
 
-            <!-- Monto (oculto o readonly) -->
             <input asp-for="Monto" type="hidden" value="@(Model?.Monto ?? 0)" />
 
-            <!-- Sección: Método de Pago -->
             <div class="payment-form-section">
                 <h3 class="payment-form-title">
                     <i class="fas fa-credit-card"></i>

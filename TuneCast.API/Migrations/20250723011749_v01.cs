@@ -129,6 +129,7 @@ namespace TuneCast.API.Migrations
                     DerechosAutor = table.Column<string>(type: "text", nullable: false),
                     numeroReproducciones = table.Column<int>(type: "integer", nullable: false),
                     Licencia = table.Column<string>(type: "text", nullable: false),
+                    RutaArchivo = table.Column<string>(type: "text", nullable: false),
                     UsuarioId = table.Column<int>(type: "integer", nullable: false),
                     PlaylistId = table.Column<int>(type: "integer", nullable: true)
                 },

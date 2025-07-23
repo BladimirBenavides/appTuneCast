@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace TuneCast.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250706013802_v01")]
+    [Migration("20250723011749_v01")]
     partial class v01
     {
         /// <inheritdoc />
@@ -85,6 +85,10 @@ namespace TuneCast.API.Migrations
 
                     b.Property<int?>("PlaylistId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("RutaArchivo")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
