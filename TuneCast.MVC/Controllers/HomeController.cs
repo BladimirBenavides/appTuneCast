@@ -22,14 +22,14 @@ namespace TuneCast.MVC.Controllers
                 return RedirectToAction("Login", "Account");  // Redirige a la página de login
             }
 
-            // Obtener canciones
+            // Obtener canciones y playlists
             var canciones = Crud<Cancion>.GetAll(); // Recuperar canciones de la API
+            var playlists = Crud<Playlist>.GetAll(); // Recuperar playlists de la API
+
+            // Pasar playlists a la vista
+            ViewBag.Playlists = playlists;
+
             return View(canciones);
-
-            // Obtén la lista de usuarios con el rol de "Artista"
-            var artistas = GetUsuariosRol("Artista");
-            return View(artistas);
-
         }
         private List<Usuario> GetUsuariosRol(string rol)
         {

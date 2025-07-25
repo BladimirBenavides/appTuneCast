@@ -160,5 +160,48 @@ namespace TuneCast.MVC.Controllers
                 return View(data);
             }
         }
+
+        // GET: Canciones/AgregarAPlaylist/5
+        public ActionResult AgregarPlaylist(int id)
+        {
+            var cancion = Crud<Cancion>.GetById(id);
+            if (cancion == null)
+                return NotFound();
+
+            var playlists = Crud<Playlist>.GetAll();
+            ViewBag.Playlists = playlists;
+            ViewBag.Cancion = cancion;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProcesarAgregarPlaylist(int cancionId, int? playlistId, string nuevaPlaylist)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(nuevaPlaylist))
+                {
+                    // El sistema detecta automáticamente qué usuario está conectado
+                    var usuarioId = HttpContext.Session.GetInt32("UsuarioId") ?? 1;
+
+                    var nuevaPlaylistObj = new Playlist
+                    {
+                        Nombre = nuevaPlaylist,
+                        UsuarioId = usuarioId
+                    };
+                    Crud<Playlist>.Create(nuevaPlaylistObj);
+                }
+
+                TempData["Mensaje"] = "Canción agregada a playlist exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("AgregarAPlaylist", new { id = cancionId });
+            }
+        }
     }
 }

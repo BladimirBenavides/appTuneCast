@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<TuneCastModelo.Cancion>
-
 @{
     ViewData["Title"] = "Home";
 }
-
 <div class="main-container">
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">TuneCast.MVC</div>
-
         <nav class="nav-section">
             <ul class="nav-links">
                 <li><a href="#" class="active">Home</a></li>
@@ -16,7 +13,6 @@
                 <li><a href="#">Tu biblioteca</a></li>
             </ul>
         </nav>
-
         <nav class="nav-section">
             <h3>Administración</h3>
             <ul class="nav-links">
@@ -29,14 +25,12 @@
                 <li><a asp-controller="Usuarios" asp-action="Index">Usuarios</a></li>
             </ul>
         </nav>
-
         <div class="library-section">
             <h4>Crea tu primera lista</h4>
             <p>Es muy fácil, y te echaremos una mano.</p>
             <button class="btn-create">Crear lista</button>
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="main-content">
         <!-- Canciones en tendencia -->
@@ -45,7 +39,6 @@
                 <h2>Canciones en tendencia</h2>
                 <a href="#" class="show-all">Mostrar todos</a>
             </div>
-
             <div class="cards-grid">
                 @foreach (var item in Model)
                 {
@@ -65,6 +58,42 @@
             </div>
         </div>
 
+        <!-- Tus Playlists -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>Tus Playlists</h2>
+                <a asp-controller="Playlists" asp-action="Index" class="show-all">Ver todas</a>
+            </div>
+            <div class="cards-grid">
+                @if (ViewBag.Playlists != null && ((IEnumerable<TuneCastModelo.Playlist>)ViewBag.Playlists).Any())
+                {
+                    @foreach (var playlist in (IEnumerable<TuneCastModelo.Playlist>)ViewBag.Playlists)
+                    {
+                        <div class="card">
+                            <a href="@Url.Action("Details", "Playlists", new { id = playlist.Id })">
+                                <div class="card-image">
+                                    🎵
+                                </div>
+                                <div class="card-title">@playlist.Nombre</div>
+                                <div class="card-subtitle">
+                                    Playlist • Usuario @playlist.UsuarioId
+                                </div>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="card">
+                        <div class="card-title">No tienes playlists</div>
+                        <div class="card-subtitle">
+                            <a asp-controller="Playlists" asp-action="Create">Crear mi primera playlist</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
         <!-- Artistas populares -->
         <div class="content-section">
             <div class="section-header">
@@ -76,7 +105,6 @@
                     <div class="artist-image">default-avatar.jpg</div>
                     <div class="artist-name">Artista</div>
                 </div>
-
             </div>
         </div>
     </div>

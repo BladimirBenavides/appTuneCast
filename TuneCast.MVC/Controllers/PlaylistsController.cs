@@ -18,8 +18,13 @@ namespace TuneCast.MVC.Controllers
         // GET: PlaylistsController/Details/5
         public ActionResult Details(int id)
         {
-            var data = Crud<Playlist>.GetById(id);
-            return View(data);
+            var playlist = Crud<Playlist>.GetById(id);
+            if (playlist == null)
+                return NotFound();
+            var todasLasCanciones = Crud<Cancion>.GetAll();
+            ViewBag.Canciones = todasLasCanciones;
+
+            return View(playlist);
         }
 
         // GET: PlaylistsController/Create

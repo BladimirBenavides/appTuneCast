@@ -1,36 +1,55 @@
 ﻿@model TuneCastModelo.Playlist
-
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-<div>
-    <h4>Playlist</h4>
+<div class="container mt-4">
+    <h3>@Model.Nombre</h3>
+    <p class="text-muted">Playlist creada por Usuario @Model.UsuarioId</p>
+
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UsuarioId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsuarioId)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+
+    <h4>Canciones en esta playlist</h4>
+
+    @if (ViewBag.Canciones != null && ((IEnumerable<TuneCastModelo.Cancion>)ViewBag.Canciones).Any())
+    {
+        <div class="row">
+            @foreach (var cancion in (IEnumerable<TuneCastModelo.Cancion>)ViewBag.Canciones)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="@($"/portadas/portada_{cancion.Id}.jpg")"
+                                 class="card-img-top rounded"
+                                 style="width: 100%; height: 150px; object-fit: cover;"
+                                 onerror="this.onerror=null;this.src='https://via.placeholder.com/150x150.png?text=♪';" />
+                            <h6 class="card-title mt-2">@cancion.Titulo</h6>
+                            <p class="card-text text-muted">@cancion.Artista</p>
+                            <a asp-controller="Canciones" asp-action="Reproducir" asp-route-id="@cancion.Id"
+                               class="btn btn-sm btn-success">▶ Reproducir</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h5>Esta playlist está vacía</h5>
+            <p>Aún no hay canciones agregadas a esta playlist.</p>
+            <a asp-controller="Canciones" asp-action="Index" class="btn btn-primary">
+                Ir a ver canciones para agregar
+            </a>
+        </div>
+    }
+
+    <hr />
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar Playlist</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver a Playlists</a>
+    </div>
 </div>
